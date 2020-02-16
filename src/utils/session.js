@@ -11,18 +11,27 @@ const {
   SESSION_SECRET = 'keyboard cat',
 } = process.env;
 
-const client = redis.createClient();
 const RedisStore = require('connect-redis')(session);
 
 export default function () {
   try {
+    const client = redis.createClient({
+      host: REDIS_HOST,
+      port: REDIS_PORT,
+    });
+
+    client
+      .on('connect', () => log('redis connection established', 'success'))
+      .on('error', (err) => {
+        log('redis connection unable to be established', 'error')
+        throw err;
+      });
+
     const store = new RedisStore({
       client,
       host: REDIS_HOST,
       port: REDIS_PORT,
     });
-
-    log('redis connection established', 'success');
 
     return session({
       cookie: {
