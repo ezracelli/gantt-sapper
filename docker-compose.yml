@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  gantt:
+    build: .
+    depends_on:
+      - mysql
+      - redis
+    env_file: .env
+    environment:
+      REDIS_HOST: redis
+      MYSQL_HOST: mysql
+      MYSQL_PORT: "3306"
+    ports:
+      - "3000:3000"
+
+  mysql:
+    image: registry.ezracelli.com/mariadb-alpine:latest
+    env_file: .env
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+    ports:
+      - "3306:3306"
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"

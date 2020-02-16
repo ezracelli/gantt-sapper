@@ -1,0 +1,8 @@
+__sapper__
+.env
+.git
+.gitignore
+.vscode
+docker-compose.yml
+Dockerfile
+node_modules
