@@ -2,8 +2,15 @@ module.exports = {
 	presets: [
 		[
       '@babel/preset-env',
-      { modules: 'commonjs' }
+      {
+        targets: {
+          node: 'current',
+        },
+        exclude: [ 'babel-plugin-transform-classes' ],
+      },
     ],
 	],
-	plugins: [],
+	plugins: [
+    '@babel/transform-runtime',
+  ],
 };

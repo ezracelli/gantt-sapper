@@ -1,3 +1,4 @@
+const babelConfig = require('./babel.config');
 const config = require('sapper/config/webpack');
 const path = require('path');
 const pkg = require('./package.json');
@@ -26,10 +27,7 @@ module.exports = {
           exclude: /node_modules\/(?!svelte)/,
           use: {
             loader: 'babel-loader',
-            options: {
-              presets: [ '@babel/preset-env' ],
-              plugins: [],
-            },
+            options: babelConfig,
           },
         },
 				{
@@ -66,6 +64,14 @@ module.exports = {
 		externals: Object.keys(pkg.dependencies).concat('encoding'),
 		module: {
 			rules: [
+        {
+          test: /\.(js|svelte)$/,
+          exclude: /node_modules\/(?!svelte)/,
+          use: {
+            loader: 'babel-loader',
+            options: babelConfig,
+          },
+        },
 				{
 					test: /\.(svelte|html)$/,
 					use: {
