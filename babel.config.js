@@ -1,6 +1,6 @@
 module.exports = {
-	presets: [
-		[
+  presets: [
+    [
       '@babel/preset-env',
       {
         targets: {
@@ -9,8 +9,8 @@ module.exports = {
         exclude: [ 'babel-plugin-transform-classes' ],
       },
     ],
-	],
-	plugins: [
+  ],
+  plugins: [
     '@babel/plugin-proposal-class-properties',
     '@babel/transform-runtime',
   ],

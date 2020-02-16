@@ -1,5 +1,5 @@
 <svelte:head>
-	<title>gantt</title>
+  <title>gantt</title>
 </svelte:head>
 
 <Gantt />

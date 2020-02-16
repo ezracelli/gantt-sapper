@@ -11,22 +11,22 @@
 </script>
 
 <main>
-	<slot></slot>
+  <slot></slot>
 </main>
 
 <style global lang="scss">
   @import 'normalize.css';
 
-	main {
-		background-color: white;
-		margin: 0 auto;
-		padding: 2em;
-		position: relative;
+  main {
+    background-color: white;
+    margin: 0 auto;
+    padding: 2em;
+    position: relative;
     box-sizing: border-box;
     min-height: 100vh;
 
     * {
       box-sizing: inherit;
     }
-	}
+  }
 </style>

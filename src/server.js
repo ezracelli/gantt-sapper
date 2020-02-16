@@ -7,7 +7,7 @@ import session from '@/utils/session';
 const { PORT } = process.env;
 
 express()
-	.use(
+  .use(
     express.json(),
     express.urlencoded({ extended: true }),
     db(),
@@ -24,12 +24,12 @@ express()
       if (req.session.user === undefined) req.session.user = false;
       next();
     },
-		compression({ threshold: 0 }),
+    compression({ threshold: 0 }),
     express.static('static'),
-		sapper.middleware({
+    sapper.middleware({
       session: req => ({ user: req.session.user }),
     }),
-	)
-	.listen(PORT, err => {
-		if (err) throw err;
-	});
+  )
+  .listen(PORT, err => {
+    if (err) throw err;
+  });
