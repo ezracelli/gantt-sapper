@@ -32,8 +32,6 @@
       session.set({ user });
       goto('/');
     } catch (err) {
-      console.error(err);
-
       error = true
       submitting = false
 
