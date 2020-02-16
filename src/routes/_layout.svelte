@@ -1,22 +1,32 @@
-<script>
-	import Nav from '../components/Nav.svelte';
+<script context="module">
+  export async function preload (page, { user }) {
+    // make sure we're not blocking css, js, images, .html files
+    if (!/\.\w+$/.test(page.path) && !/\.html$/.test(page.path)) {
+      if (page.path !== '/login' && !user) this.redirect(302, '/login');
+      else if (page.path === '/login' && user) this.redirect(302, '/');
+    }
 
-	export let segment;
+    else return { user };
+  }
 </script>
-
-<style>
-	main {
-		position: relative;
-		max-width: 56em;
-		background-color: white;
-		padding: 2em;
-		margin: 0 auto;
-		box-sizing: border-box;
-	}
-</style>
-
-<Nav {segment}/>
 
 <main>
 	<slot></slot>
 </main>
+
+<style global lang="scss">
+  @import 'normalize.css';
+
+	main {
+		background-color: white;
+		margin: 0 auto;
+		padding: 2em;
+		position: relative;
+    box-sizing: border-box;
+    min-height: 100vh;
+
+    * {
+      box-sizing: inherit;
+    }
+	}
+</style>

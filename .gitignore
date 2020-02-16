@@ -1,6 +1,27 @@
-.DS_Store
-/node_modules/
+# project files
 /src/node_modules/@sapper/
-yarn-error.log
 /cypress/screenshots/
 /__sapper__/
+
+# os-related
+.DS_Store
+node_modules
+
+# env files
+.env
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

@@ -1,14 +1,18 @@
-const webpack = require('webpack');
+const config = require('sapper/config/webpack');
 const path = require('path');
-const config = require('sapper/config/webpack.js');
 const pkg = require('./package.json');
+const { preprocess } = require('./svelte.config');
+const webpack = require('webpack');
 
 const mode = process.env.NODE_ENV;
-const dev = mode === 'development';
+const dev = mode !== 'production';
 
-const alias = { svelte: path.resolve('node_modules', 'svelte') };
-const extensions = ['.mjs', '.js', '.json', '.svelte', '.html'];
-const mainFields = ['svelte', 'module', 'browser', 'main'];
+const alias = {
+  '@': path.resolve('src'),
+  svelte: path.resolve('node_modules', 'svelte'),
+};
+const extensions = [ '.mjs', '.js', '.json', '.svelte', '.html' ];
+const mainFields = [ 'svelte', 'module', 'browser', 'main' ];
 
 module.exports = {
 	client: {
@@ -17,6 +21,17 @@ module.exports = {
 		resolve: { alias, extensions, mainFields },
 		module: {
 			rules: [
+        {
+          test: /\.(js|svelte)$/,
+          exclude: /node_modules\/(?!svelte)/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: [ '@babel/preset-env' ],
+              plugins: [],
+            },
+          },
+        },
 				{
 					test: /\.(svelte|html)$/,
 					use: {
@@ -24,22 +39,23 @@ module.exports = {
 						options: {
 							dev,
 							hydratable: true,
-							hotReload: false // pending https://github.com/sveltejs/svelte/issues/2377
-						}
-					}
-				}
-			]
+              hotReload: false, // pending https://github.com/sveltejs/svelte/issues/2377
+              preprocess,
+						},
+					},
+        },
+			],
 		},
 		mode,
 		plugins: [
 			// pending https://github.com/sveltejs/svelte/issues/2377
-			// dev && new webpack.HotModuleReplacementPlugin(),
+      // dev && new webpack.HotModuleReplacementPlugin(),
 			new webpack.DefinePlugin({
 				'process.browser': true,
 				'process.env.NODE_ENV': JSON.stringify(mode)
 			}),
 		].filter(Boolean),
-		devtool: dev && 'inline-source-map'
+		devtool: dev && 'inline-source-map',
 	},
 
 	server: {
@@ -57,12 +73,13 @@ module.exports = {
 						options: {
 							css: false,
 							generate: 'ssr',
-							dev
+              dev,
+              preprocess,
 						}
 					}
 				}
 			]
-		},
+    },
 		mode: process.env.NODE_ENV,
 		performance: {
 			hints: false // it doesn't matter if server.js is large
