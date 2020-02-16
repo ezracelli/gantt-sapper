@@ -1,4 +1,13 @@
 class Gantt {
+  static dateEditor = {
+    type: 'date',
+    map_to: 'start_date',
+    min: new Date(2018, 0, 1),
+    max: new Date(2019, 0, 1),
+  };
+  static durationEditor = { type: 'number', map_to: 'duration', min: 0, max: 100 };
+  static textEditor = { type: 'text', map_to: 'text' };
+
   constructor (gantt, selector, config) {
     this.config = config;
     this.element = document.querySelector(selector);
@@ -37,14 +46,5 @@ class Gantt {
     return this;
   }
 }
-
-Gantt.dateEditor = {
-  type: 'date',
-  map_to: 'start_date',
-  min: new Date(2018, 0, 1),
-  max: new Date(2019, 0, 1),
-};
-Gantt.durationEditor = { type: 'number', map_to: 'duration', min: 0, max: 100 };
-Gantt.textEditor = { type: 'text', map_to: 'text' };
 
 export default Gantt;
